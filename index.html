@@ -406,7 +406,9 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
 .combo-photo img{ width:100%; height:100%; object-fit:cover; filter:saturate(1.12) contrast(1.04); transition:transform .6s var(--ease); }
 .combo-live:hover .combo-photo img{ transform:scale(1.1); }
 .combo-live b{ color:var(--saffron); font-family:var(--serif); font-size:22px; }
-.combo-live .combo-dishes{ margin:0; color:var(--ivory); font-size:12.5px; line-height:1.45; }
+.combo-live .combo-dishes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px 12px; margin:0; color:var(--ivory); line-height:1.25; }
+.combo-dishes em{ position:relative; padding-left:10px; color:#fff; font-size:11.5px; font-style:normal; font-weight:600; }
+.combo-dishes em::before{ content:"•"; position:absolute; left:0; color:var(--saffron); }
 .combo-live strong{ color:var(--saffron); font-family:var(--serif); font-size:25px; white-space:nowrap; }
 .combo-live strong small{ font-family:var(--sans); font-size:11px; font-weight:500; color:var(--ivory-50); }
 .mb-bar{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; padding:10px 0 18px; border-bottom:1px solid #ead7b6; margin-bottom:22px; }
@@ -538,6 +540,7 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
   .combo-options{ grid-template-columns:repeat(2,minmax(0,1fr)); }
   .combo-live{ grid-template-columns:1fr; gap:6px; }
   .combo-photo{ height:132px; margin-bottom:6px!important; }
+  .combo-live .combo-dishes{ grid-template-columns:1fr; gap:4px; margin:5px 0; }
   .combo-live strong{ justify-self:start; }
   .story-stats dt{ font-size:40px; }
   .memorable{ min-height:auto; padding:100px 0; }
@@ -819,8 +822,7 @@ body.offer-open{ overflow:hidden; }
 .offer-visual img{ width:100%; height:100%; object-fit:cover; object-position:46% center; filter:saturate(1.13) contrast(1.04) brightness(.78); transform:scale(1.08); animation:offerPhoto 10s ease-in-out infinite alternate; }
 .offer-live-tag{ position:absolute; left:20px; top:20px; z-index:2; display:flex; align-items:center; gap:8px; padding:7px 11px; border-radius:999px; background:rgba(22,8,6,.72); border:1px solid rgba(246,196,69,.42); color:#fff; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; backdrop-filter:blur(8px); }
 .offer-live-tag i{ width:8px; height:8px; border-radius:50%; background:#ff3f32; box-shadow:0 0 0 0 rgba(255,63,50,.7); animation:livePulse 1.8s infinite; }
-.offer-credit{ position:absolute; left:20px; bottom:17px; z-index:2; color:rgba(255,255,255,.62); font-size:9px; }
-.offer-credit a{ color:inherit; text-decoration:underline; }
+.offer-photo-caption{ position:absolute; left:18px; bottom:17px; z-index:2; max-width:calc(100% - 165px); padding:8px 11px; border:1px solid rgba(246,196,69,.38); border-radius:10px; background:rgba(22,8,6,.72); color:#fff; font-size:11px; font-weight:700; line-height:1.25; letter-spacing:.02em; backdrop-filter:blur(8px); }
 .offer-inner{ position:relative; z-index:1; display:flex; flex-direction:column; justify-content:center; padding:48px 46px 40px; overflow:auto; }
 .offer-kicker{ margin:0 0 10px; color:var(--saffron); font-size:12px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
 .offer-title{ margin:0; max-width:10ch; font-family:var(--serif); font-size:clamp(46px,5.2vw,68px); font-weight:600; line-height:.9; }
@@ -828,9 +830,9 @@ body.offer-open{ overflow:hidden; }
 .offer-price{ position:absolute; right:18px; bottom:52px; z-index:2; width:128px; height:128px; display:grid; place-content:center; border-radius:50%; background:var(--gold-foil); color:#3a0a0a; text-align:center; transform:rotate(5deg); box-shadow:0 14px 34px rgba(0,0,0,.45),0 0 0 6px rgba(246,196,69,.16); animation:priceFloat 3.2s ease-in-out infinite; }
 .offer-price b{ display:block; font-family:var(--serif); font-size:46px; line-height:.82; }
 .offer-price span{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
-.offer-menu{ display:grid; grid-template-columns:1fr 1fr; gap:9px 18px; margin:24px 0; padding:17px 0; border-top:1px solid rgba(246,196,69,.25); border-bottom:1px solid rgba(246,196,69,.25); }
-.offer-menu span{ position:relative; padding-left:16px; color:rgba(255,246,231,.82); font-size:13px; line-height:1.4; }
-.offer-menu span::before{ content:"•"; position:absolute; left:0; color:var(--saffron); }
+.offer-menu{ display:grid; grid-template-columns:1fr 1fr; gap:7px; margin:22px 0; padding:10px; border:1px solid rgba(246,196,69,.28); border-radius:14px; background:rgba(0,0,0,.2); }
+.offer-menu span{ position:relative; min-height:40px; display:flex; align-items:center; padding:8px 9px 8px 25px; border-radius:9px; background:rgba(255,246,231,.06); color:#fff; font-size:13.5px; font-weight:650; line-height:1.25; text-shadow:0 1px 2px rgba(0,0,0,.7); }
+.offer-menu span::before{ content:"•"; position:absolute; left:10px; color:var(--saffron); font-size:18px; }
 .offer-actions{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
 .offer-go{ position:relative; overflow:hidden; border:0; border-radius:999px; padding:14px 22px; background:var(--gold-foil); color:#3a0a0a; font-size:15px; font-weight:700; box-shadow:0 14px 30px -14px rgba(246,196,69,.95); animation:ctaGlow 2.4s ease-in-out infinite; }
 .offer-go::after{ content:""; position:absolute; inset:-20%; background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%); transform:translateX(-130%); animation:ctaShine 3.2s 1.4s ease-in-out infinite; }
@@ -861,10 +863,11 @@ body.offer-open{ overflow:hidden; }
   .offer-title{ max-width:none; font-size:44px; }
   .offer-price{ right:18px; bottom:16px; width:auto; height:auto; display:flex; align-items:baseline; gap:7px; padding:11px 14px; border-radius:14px; transform:none; animation:none; }
   .offer-price b{ font-size:34px; }
-  .offer-menu{ grid-template-columns:1fr 1fr; margin:17px 0; padding:14px 0; gap:6px 12px; }
-  .offer-menu span{ font-size:11.5px; }
+  .offer-menu{ grid-template-columns:1fr 1fr; margin:17px 0; padding:7px; gap:5px; }
+  .offer-menu span{ min-height:34px; padding:6px 7px 6px 21px; font-size:11.5px; }
+  .offer-menu span::before{ left:8px; font-size:15px; }
   .offer-live-tag{ top:14px; left:14px; }
-  .offer-credit{ left:14px; bottom:12px; }
+  .offer-photo-caption{ left:14px; bottom:12px; max-width:calc(100% - 170px); padding:6px 8px; font-size:9.5px; }
 }
 @media (max-width:420px){ .offer-title{ font-size:39px; } .offer-card{ grid-template-rows:190px minmax(0,1fr); } .offer-menu{ grid-template-columns:1fr; } }
 @media (prefers-reduced-motion:reduce){ .offer-card{ transition:none; } .combo-live.offer-focus,.offer-card::before,.offer-visual img,.offer-price,.offer-go,.offer-go::after,.offer-sparks i{ animation:none; } }
@@ -1135,7 +1138,7 @@ body.offer-open{ overflow:hidden; }
               <button type="button" class="combo-btn" data-menu-combo="sl"><b>Sri Lankan Starter</b><span>2 dishes · Get combo quote</span></button>
               <button type="button" class="combo-btn" data-menu-combo="si"><b>Indian Favourites</b><span>2 dishes · Get combo quote</span></button>
               <button type="button" class="combo-btn" data-menu-combo="ar"><b>Arab Dishes to Share</b><span>2 dishes · Get combo quote</span></button>
-              <a class="combo-btn combo-live" id="liveCombo1" href="https://wa.me/13659946989" target="_blank" rel="noopener"><span class="combo-photo"><img src="assets/live-combo-buffet.jpg" alt="Indian catering buffet"></span><b>Live Combo 1</b><span class="combo-dishes">Mixed seafood · Chicken tikka · Choice of kotthu, puttu kotthu or idiyappam kotthu · Fried rice · Choice of chilli chicken or chicken devilled · Fruit salad with cream</span><strong>$35 <small>per person</small></strong></a>
+              <a class="combo-btn combo-live" id="liveCombo1" href="https://wa.me/13659946989" target="_blank" rel="noopener"><span class="combo-photo"><img src="assets/live-combo-buffet.jpg" alt="Chicken kothu rotti, mixed seafood fried rice and fruit salad with cream"></span><b>Live Combo 1</b><span class="combo-dishes"><em>Mixed seafood</em><em>Chicken tikka</em><em>Kothu rotti choices</em><em>Mixed fried rice</em><em>Devilled chicken choice</em><em>Fruit salad with cream</em></span><strong>$35 <small>per person</small></strong></a>
             </div>
           </div>
           <div class="mb-bar" role="group" aria-label="Menu filters">
@@ -1415,17 +1418,17 @@ body.offer-open{ overflow:hidden; }
     <div class="offer-sparks" aria-hidden="true"><i style="--x:8%;--s:4px;--d:6s;--delay:0s;--drift:28px"></i><i style="--x:19%;--s:6px;--d:8s;--delay:1.2s;--drift:-18px"></i><i style="--x:34%;--s:3px;--d:7s;--delay:2.5s;--drift:42px"></i><i style="--x:52%;--s:5px;--d:9s;--delay:.5s;--drift:-35px"></i><i style="--x:68%;--s:4px;--d:6.5s;--delay:3s;--drift:22px"></i><i style="--x:82%;--s:6px;--d:8.5s;--delay:1.8s;--drift:-26px"></i><i style="--x:93%;--s:3px;--d:7.5s;--delay:4s;--drift:18px"></i></div>
     <button type="button" class="offer-close" data-offer-close aria-label="Close special offer">×</button>
     <figure class="offer-visual">
-      <img src="assets/live-combo-buffet.jpg" alt="A colourful Indian catering buffet with hot dishes ready to serve">
+      <img src="assets/live-combo-buffet.jpg" alt="Chicken kothu rotti, mixed seafood fried rice and fruit salad with cream">
       <span class="offer-live-tag"><i></i>Live catering</span>
       <div class="offer-price"><b>$35</b><span>per person</span></div>
-      <figcaption class="offer-credit">Photo: <a href="https://unsplash.com/photos/a-buffet-table-filled-with-different-types-of-food-Wp-slwuk1CY" target="_blank" rel="noopener">Reubx / Unsplash</a></figcaption>
+      <figcaption class="offer-photo-caption">Kothu rotti · Mixed fried rice · Fruit salad</figcaption>
     </figure>
     <div class="offer-inner">
       <p class="offer-kicker">Live Combo 1 · Limited offer</p>
       <h2 class="offer-title" id="offerTitle">Turn up the <em>heat.</em></h2>
       <div class="offer-menu" aria-label="Live Combo 1 menu">
         <span>Mixed seafood</span><span>Chicken tikka</span>
-        <span>Your choice of kotthu</span><span>Fried rice</span>
+        <span>Kothu rotti, puttu or idiyappam kothu</span><span>Mixed fried rice</span>
         <span>Chilli chicken or chicken devilled</span><span>Fruit salad with cream</span>
       </div>
       <div class="offer-actions">
@@ -2760,8 +2763,8 @@ const LIVE_COMBO_1_TEXT = `Hello Poomani Authentic Kitchen, I am interested in L
 Menu:
 - Mixed seafood
 - Chicken tikka
-- Choice of kotthu, puttu kotthu or idiyappam kotthu
-- Fried rice
+- Choice of kothu rotti, puttu kothu or idiyappam kothu
+- Mixed fried rice
 - Choice of chilli chicken or chicken devilled
 - Fruit salad with cream
 
