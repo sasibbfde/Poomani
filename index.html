@@ -397,10 +397,15 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
 .combo-strip p{ margin:0 0 3px; color:var(--saffron); font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
 .combo-strip h3{ margin:0; color:var(--ivory); font-family:var(--serif); font-size:25px; line-height:1.05; }
 .combo-options{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
-.combo-btn{ min-height:68px; padding:10px 12px; border:1px solid rgba(246,196,69,.3); border-radius:12px; background:rgba(0,0,0,.16); color:var(--ivory); text-align:left; transition:border-color .2s, background .2s, transform .2s; }
+.combo-btn{ display:block; min-height:68px; padding:10px 12px; border:1px solid rgba(246,196,69,.3); border-radius:12px; background:rgba(0,0,0,.16); color:var(--ivory); text-align:left; text-decoration:none; transition:border-color .2s, background .2s, transform .2s; }
 .combo-btn:hover{ border-color:var(--saffron); background:rgba(246,196,69,.1); transform:translateY(-2px); }
 .combo-btn b{ display:block; font-size:14px; font-weight:600; line-height:1.2; }
 .combo-btn span{ display:block; margin-top:5px; color:var(--ivory-50); font-size:11.5px; line-height:1.25; }
+.combo-live{ grid-column:1 / -1; display:grid; grid-template-columns:150px 1fr auto; gap:14px; align-items:center; padding:15px 16px; border-color:rgba(246,196,69,.65); background:linear-gradient(120deg,rgba(184,32,37,.35),rgba(246,196,69,.12)); }
+.combo-live b{ color:var(--saffron); font-family:var(--serif); font-size:22px; }
+.combo-live .combo-dishes{ margin:0; color:var(--ivory); font-size:12.5px; line-height:1.45; }
+.combo-live strong{ color:var(--saffron); font-family:var(--serif); font-size:25px; white-space:nowrap; }
+.combo-live strong small{ font-family:var(--sans); font-size:11px; font-weight:500; color:var(--ivory-50); }
 .mb-bar{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; padding:10px 0 18px; border-bottom:1px solid #ead7b6; margin-bottom:22px; }
 #courseSeg{ display:flex; gap:6px; flex-wrap:wrap; }
 #courseSeg button{ border:1px solid #e0c9a4; background:none; padding:7px 14px; border-radius:999px; font-size:14px; color:#5b4f47; transition:background .2s, color .2s; }
@@ -528,6 +533,8 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
   .mb-kitchens{ grid-template-columns:1fr; gap:8px; }
   .mb-dishes{ grid-template-columns:1fr; }
   .combo-options{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .combo-live{ grid-template-columns:1fr; gap:6px; }
+  .combo-live strong{ justify-self:start; }
   .story-stats dt{ font-size:40px; }
   .memorable{ min-height:auto; padding:100px 0; }
   .memorable::before{ background:linear-gradient(0deg, rgba(14,5,4,.97) 20%, rgba(14,5,4,.55) 70%, rgba(14,5,4,.3)); }
@@ -1058,6 +1065,7 @@ fieldset.addr legend{ padding:0 8px; font-size:14px; font-weight:600; color:var(
               <button type="button" class="combo-btn" data-menu-combo="sl"><b>Sri Lankan Starter</b><span>2 dishes · Get combo quote</span></button>
               <button type="button" class="combo-btn" data-menu-combo="si"><b>Indian Favourites</b><span>2 dishes · Get combo quote</span></button>
               <button type="button" class="combo-btn" data-menu-combo="ar"><b>Arab Dishes to Share</b><span>2 dishes · Get combo quote</span></button>
+              <a class="combo-btn combo-live" id="liveCombo1" href="https://wa.me/13659946989" target="_blank" rel="noopener"><b>Live Combo 1</b><span class="combo-dishes">Mixed seafood · Chicken tikka · Choice of kotthu, puttu kotthu or idiyappam kotthu · Fried rice · Choice of chilli chicken or chicken devilled · Fruit salad with cream</span><strong>$35 <small>per person</small></strong></a>
             </div>
           </div>
           <div class="mb-bar" role="group" aria-label="Menu filters">
@@ -2650,6 +2658,18 @@ if (hasGSAP && !reduced && typeof ScrollTrigger !== 'undefined'){
 /* ================= Build your menu ================= */
 const WA_NUMBER = '13659946989';
 const waLink = text => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+const LIVE_COMBO_1_TEXT = `Hello Poomani Authentic Kitchen, I am interested in Live Combo 1 at $35 per person.
+
+Menu:
+- Mixed seafood
+- Chicken tikka
+- Choice of kotthu, puttu kotthu or idiyappam kotthu
+- Fried rice
+- Choice of chilli chicken or chicken devilled
+- Fruit salad with cream
+
+Please help me confirm the guest count, event date and my menu choices. Thank you.`;
+document.getElementById('liveCombo1').href = waLink(LIVE_COMBO_1_TEXT);
 const KITCHENS = { 'Sri Lankan':'#E0452B', 'Indian':'#F6C445', 'Arab':'#C9CED6', 'Fusion':'#F2892E', 'Desserts':'#E9A8C0' };
 const COURSE_ORDER = ['Curry','Kotthu','Grill','Devilled','Biryani','Fried rice','Rice','Tiffin','Bread','Pasta','Side','Dessert'];
 const COURSE_GROUP = { Curry:'Curry', Kotthu:'Kotthu', Grill:'Grill', Devilled:'Grill', Biryani:'Rice', 'Fried rice':'Rice', Rice:'Rice', Tiffin:'Tiffin', Bread:'Tiffin', Pasta:'Pasta', Side:'Side', Dessert:'Dessert' };
