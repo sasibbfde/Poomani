@@ -393,6 +393,14 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
 .kit[aria-pressed="true"] i::after{ content:""; width:7px; height:4px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(-45deg) translate(1px,-1px); }
 .kit small{ display:block; font-size:12.5px; color:#7a6a5d; font-weight:400; }
 .kit-hint{ font-size:13.5px; color:#7a6a5d; margin:-6px 0 16px; }
+.combo-strip{ display:grid; grid-template-columns:190px 1fr; gap:18px; align-items:center; margin:0 0 20px; padding:18px; border:1px solid rgba(246,196,69,.28); border-radius:18px; background:rgba(255,246,231,.05); }
+.combo-strip p{ margin:0 0 3px; color:var(--saffron); font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; }
+.combo-strip h3{ margin:0; color:var(--ivory); font-family:var(--serif); font-size:25px; line-height:1.05; }
+.combo-options{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.combo-btn{ min-height:68px; padding:10px 12px; border:1px solid rgba(246,196,69,.3); border-radius:12px; background:rgba(0,0,0,.16); color:var(--ivory); text-align:left; transition:border-color .2s, background .2s, transform .2s; }
+.combo-btn:hover{ border-color:var(--saffron); background:rgba(246,196,69,.1); transform:translateY(-2px); }
+.combo-btn b{ display:block; font-size:14px; font-weight:600; line-height:1.2; }
+.combo-btn span{ display:block; margin-top:5px; color:var(--ivory-50); font-size:11.5px; line-height:1.25; }
 .mb-bar{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; padding:10px 0 18px; border-bottom:1px solid #ead7b6; margin-bottom:22px; }
 #courseSeg{ display:flex; gap:6px; flex-wrap:wrap; }
 #courseSeg button{ border:1px solid #e0c9a4; background:none; padding:7px 14px; border-radius:999px; font-size:14px; color:#5b4f47; transition:background .2s, color .2s; }
@@ -405,7 +413,10 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
 .dcard.picked{ border-color:var(--k); box-shadow:0 14px 30px -18px rgba(38,33,30,.55); background:#fff; }
 .dc-top{ display:flex; justify-content:space-between; font-size:12.5px; color:#7a6a5d; margin-bottom:4px; }
 .dc-k{ color:var(--k); font-weight:500; filter:saturate(1.1) brightness(.85); }
+.dc-title{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; }
 .dcard h4{ margin:0; font-family:var(--serif); font-size:24px; font-weight:600; line-height:1.1; color:var(--ink); }
+.dc-price{ flex-shrink:0; color:var(--saffron); font-family:var(--serif); font-size:23px; font-weight:700; line-height:1; }
+.dc-price.quote{ color:#7a6a5d; font-family:var(--sans); font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.05em; }
 .dcard p{ margin:6px 0 14px; font-size:14.5px; color:#5b4f47; line-height:1.5; flex:1; }
 .dc-foot{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .dc-heat{ display:inline-flex; gap:3px; margin-right:4px; }
@@ -507,6 +518,7 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
   .mb{ grid-template-columns:1fr; }
   .mb-panel{ position:relative; top:auto; }
   .mb-dishes{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .combo-strip{ grid-template-columns:1fr; }
   .story-img{ aspect-ratio:16/11; }
 }
 @media (max-width: 760px){
@@ -515,6 +527,7 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
   .ot-plus{ font-size:26px; }
   .mb-kitchens{ grid-template-columns:1fr; gap:8px; }
   .mb-dishes{ grid-template-columns:1fr; }
+  .combo-options{ grid-template-columns:repeat(2,minmax(0,1fr)); }
   .story-stats dt{ font-size:40px; }
   .memorable{ min-height:auto; padding:100px 0; }
   .memorable::before{ background:linear-gradient(0deg, rgba(14,5,4,.97) 20%, rgba(14,5,4,.55) 70%, rgba(14,5,4,.3)); }
@@ -571,6 +584,7 @@ input[type=text], input[type=email], input[type=tel], input[type=number], input[
 .m2 .dc-top{ color:rgba(238,241,245,.6); }
 .m2 .dc-k{ color:var(--k); filter:none; }
 .m2 .dcard h4{ color:#FFF6E7; font-size:25px; }
+.m2 .dc-price.quote{ color:rgba(238,241,245,.55); }
 .m2 .dcard p{ color:rgba(238,241,245,.72); }
 .m2 .dc-heat i{ background:rgba(201,206,214,.28); }
 .m2 .dc-heat i.on{ background:#ff4a2e; box-shadow:0 0 8px rgba(255,74,46,.7); }
@@ -1037,6 +1051,15 @@ fieldset.addr legend{ padding:0 8px; font-size:14px; font-weight:600; color:var(
             <button type="button" class="kit" data-c="Desserts" aria-pressed="true" style="--k:#E9A8C0"><span class="kit-img" data-img="dessert"></span><i aria-hidden="true"></i><span class="kit-txt">Desserts<small></small></span></button>
           </div>
           <p class="kit-hint">Switch on more than one to mix cuisines on one menu.</p>
+          <div class="combo-strip" aria-labelledby="comboTitle">
+            <div><p>Quick combinations</p><h3 id="comboTitle">Start with a combo</h3></div>
+            <div class="combo-options">
+              <button type="button" class="combo-btn" data-menu-combo="mix"><b>Mixed Table</b><span>7 dishes · Get combo quote</span></button>
+              <button type="button" class="combo-btn" data-menu-combo="sl"><b>Sri Lankan Starter</b><span>2 dishes · Get combo quote</span></button>
+              <button type="button" class="combo-btn" data-menu-combo="si"><b>Indian Favourites</b><span>2 dishes · Get combo quote</span></button>
+              <button type="button" class="combo-btn" data-menu-combo="ar"><b>Arab Dishes to Share</b><span>2 dishes · Get combo quote</span></button>
+            </div>
+          </div>
           <div class="mb-bar" role="group" aria-label="Menu filters">
             <div id="courseSeg">
               <button type="button" data-course="All" aria-pressed="true">Everything</button>
@@ -1045,6 +1068,7 @@ fieldset.addr legend{ padding:0 8px; font-size:14px; font-weight:600; color:var(
               <button type="button" data-course="Kotthu" aria-pressed="false">Kotthu</button>
               <button type="button" data-course="Tiffin" aria-pressed="false">Tiffin &amp; breads</button>
               <button type="button" data-course="Grill" aria-pressed="false">Grill &amp; devilled</button>
+              <button type="button" data-course="Pasta" aria-pressed="false">Pasta</button>
               <button type="button" data-course="Side" aria-pressed="false">Sides</button>
               <button type="button" data-course="Dessert" aria-pressed="false">Desserts</button>
             </div>
@@ -1096,7 +1120,7 @@ fieldset.addr legend{ padding:0 8px; font-size:14px; font-weight:600; color:var(
           </div>
         </aside>
       </div>
-      <p class="menu-note">Representative dishes. Final menus, halal status and allergen details are confirmed against our actual recipes before you book.</p>
+      <p class="menu-note">Prices are shown in CAD. Items without a listed price and all combos are quoted on request. Final menus, quantities, halal status and allergen details are confirmed before you book.</p>
     </div>
   </section>
 
@@ -2627,54 +2651,58 @@ if (hasGSAP && !reduced && typeof ScrollTrigger !== 'undefined'){
 const WA_NUMBER = '13659946989';
 const waLink = text => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
 const KITCHENS = { 'Sri Lankan':'#E0452B', 'Indian':'#F6C445', 'Arab':'#C9CED6', 'Fusion':'#F2892E', 'Desserts':'#E9A8C0' };
-const COURSE_ORDER = ['Curry','Kotthu','Grill','Devilled','Biryani','Fried rice','Rice','Tiffin','Bread','Side','Dessert'];
-const COURSE_GROUP = { Curry:'Curry', Kotthu:'Kotthu', Grill:'Grill', Devilled:'Grill', Biryani:'Rice', 'Fried rice':'Rice', Rice:'Rice', Tiffin:'Tiffin', Bread:'Tiffin', Side:'Side', Dessert:'Dessert' };
-const SLOT_OF = { Curry:'Main', Kotthu:'Main', Grill:'Main', Devilled:'Main', Biryani:'Rice', 'Fried rice':'Rice', Rice:'Rice', Tiffin:'Rice', Bread:'Rice', Side:'Side', Dessert:'Dessert' };
+const COURSE_ORDER = ['Curry','Kotthu','Grill','Devilled','Biryani','Fried rice','Rice','Tiffin','Bread','Pasta','Side','Dessert'];
+const COURSE_GROUP = { Curry:'Curry', Kotthu:'Kotthu', Grill:'Grill', Devilled:'Grill', Biryani:'Rice', 'Fried rice':'Rice', Rice:'Rice', Tiffin:'Tiffin', Bread:'Tiffin', Pasta:'Pasta', Side:'Side', Dessert:'Dessert' };
+const SLOT_OF = { Curry:'Main', Kotthu:'Main', Grill:'Main', Devilled:'Main', Biryani:'Rice', 'Fried rice':'Rice', Rice:'Rice', Tiffin:'Rice', Bread:'Rice', Pasta:'Main', Side:'Side', Dessert:'Dessert' };
 const DISHES = [
-  ["Jaffna style mutton curry", "Sri Lankan", "Tender mutton slow-cooked in roasted Jaffna curry powder, rich and fiery.", 3, false, true, "Curry"],
-  ["Jaffna style crab curry", "Sri Lankan", "Crab in a deep, roasted spice gravy with a touch of tamarind.", 3, false, true, "Curry"],
-  ["Chicken curry", "Sri Lankan", "Home-style Sri Lankan chicken curry with roasted spices and coconut milk.", 2, false, true, "Curry"],
-  ["Poomani\u2019s special chicken curry", "Sri Lankan", "Our signature chicken curry, cooked to the family recipe.", 2, false, true, "Curry"],
-  ["Jaffna style coconut fish curry", "Sri Lankan", "Fish simmered in coconut milk with Jaffna spices and curry leaves.", 2, false, true, "Curry"],
-  ["Pork curry", "Sri Lankan", "Sri Lankan style pork curry, dark-roasted and slow-cooked.", 2, false, false, "Curry"],
-  ["Jaffna spicy beef curry", "Sri Lankan", "Beef cooked down in a hot, roasted Jaffna masala.", 3, false, true, "Curry"],
-  ["Prawns curry", "Sri Lankan", "Prawns in a spiced coconut gravy.", 2, false, true, "Curry"],
-  ["White rice", "Sri Lankan", "Steamed white rice.", 0, true, true, "Rice"],
-  ["Poonakari brown rice", "Sri Lankan", "Nutty red rice from Poonakari in the north, the classic partner for Jaffna curries.", 0, true, true, "Rice"],
-  ["Sweet fried chicken kotthu", "Sri Lankan", "Chopped roti on the hot plate with sweet, crispy fried chicken.", 1, false, true, "Kotthu"],
-  ["Chicken curry kotthu", "Sri Lankan", "Kotthu roti tossed with chicken curry, egg and vegetables.", 2, false, true, "Kotthu"],
-  ["Mutton kotthu", "Sri Lankan", "Kotthu roti with spiced mutton, egg and leeks.", 2, false, true, "Kotthu"],
-  ["Seafood kotthu", "Sri Lankan", "Kotthu roti with prawns, fish and cuttlefish.", 2, false, true, "Kotthu"],
-  ["Sri Lankan style potato curry", "Sri Lankan", "Potatoes in a mild, turmeric-gold coconut curry.", 1, true, true, "Side"],
-  ["Sri Lankan style dhal curry", "Sri Lankan", "Red lentils simmered with coconut milk, curry leaves and mustard seeds.", 1, true, true, "Side"],
-  ["Appalam", "Sri Lankan", "Crisp lentil wafers to crunch alongside rice and curry.", 0, true, true, "Side"],
-  ["Chicken biryani", "Indian", "Fragrant basmati layered with spiced chicken, mint and fried onions.", 2, false, true, "Biryani"],
-  ["Mutton biryani", "Indian", "Tender mutton layered with fragrant rice and whole spices.", 2, false, true, "Biryani"],
-  ["Hyderabadi chicken biryani", "Indian", "Dum-cooked the Hyderabadi way, with saffron and slow-cooked chicken.", 2, false, true, "Biryani"],
-  ["Idly", "Indian", "Soft steamed rice cakes with sambar and chutney.", 1, true, true, "Tiffin"],
-  ["Dosa", "Indian", "Crisp rice crepe with sambar and chutneys.", 1, true, true, "Tiffin"],
-  ["Appam", "Indian", "Lacy rice pancakes with soft, spongy centres.", 0, true, true, "Tiffin"],
-  ["Idiyappam", "Indian", "Steamed string hoppers, light and delicate.", 0, true, true, "Tiffin"],
-  ["Mandi biryani", "Arab", "Slow-cooked meat over smoky, spiced mandi rice with toasted nuts.", 1, false, true, "Biryani"],
-  ["Naan", "Arab", "Soft, blistered flatbread.", 0, true, true, "Bread"],
-  ["Garlic naan", "Arab", "Naan brushed with garlic butter and herbs.", 0, true, true, "Bread"],
-  ["Sheermal bread", "Arab", "Lightly sweet, saffron-scented flatbread.", 0, true, true, "Bread"],
-  ["Beef steak", "Arab", "Seasoned beef steak, seared on the grill.", 1, false, true, "Grill"],
-  ["Chicken tikka", "Arab", "Yogurt-marinated chicken, charred on the grill.", 2, false, true, "Grill"],
-  ["Kebab", "Arab", "Spiced minced meat kebabs off the grill.", 1, false, true, "Grill"],
-  ["Vegetable fried rice", "Fusion", "Wok-tossed rice with crisp mixed vegetables.", 1, true, true, "Fried rice"],
-  ["Egg fried rice", "Fusion", "Fried rice with scrambled egg and spring onion.", 1, false, true, "Fried rice"],
-  ["Chicken fried rice", "Fusion", "Fried rice with chicken, egg and leeks.", 1, false, true, "Fried rice"],
-  ["Seafood fried rice", "Fusion", "Fried rice with prawns, fish and cuttlefish.", 1, false, true, "Fried rice"],
-  ["Chilli chicken", "Fusion", "Crisp chicken tossed with green chilli, capsicum and onion.", 3, false, true, "Devilled"],
-  ["Juicy beef devilled", "Fusion", "Tender beef wok-tossed in a sweet-hot devilled sauce.", 2, false, true, "Devilled"],
-  ["Sri Lankan style chicken devilled", "Fusion", "Chicken wok-tossed with onion, capsicum and a sweet chilli glaze.", 2, false, true, "Devilled"],
-  ["Prawns devilled", "Fusion", "Juicy prawns in a sweet-hot devilled sauce.", 2, false, true, "Devilled"],
-  ["Butter chicken", "Fusion", "Tandoori chicken in a silky tomato and butter gravy.", 1, false, true, "Curry"],
-  ["Poomani house-made ice cream", "Desserts", "Poomani Authentic Kitchen\u2019s own ice cream, in multiple flavours.", 0, true, true, "Dessert"],
-  ["Paayasam", "Desserts", "A softly sweet, cardamom-scented milk pudding.", 0, true, true, "Dessert"],
-  ["Sri Lankan & Indian sweets", "Desserts", "An assortment of traditional sweets from both kitchens.", 0, true, true, "Dessert"]
-].map(([name,cuisine,desc,spice,veg,halal,course],id) => ({id,name,cuisine,desc,spice,veg,halal,course}));
+  ["Jaffna style mutton curry", "Sri Lankan", "Tender mutton slow-cooked in roasted Jaffna curry powder, rich and fiery.", 3, false, true, "Curry", 6],
+  ["Jaffna style crab curry", "Sri Lankan", "Crab in a deep, roasted spice gravy with a touch of tamarind.", 3, false, true, "Curry", 6],
+  ["Chicken curry", "Sri Lankan", "Home-style Sri Lankan chicken curry with roasted spices and coconut milk.", 2, false, true, "Curry", 4],
+  ["Poomani\u2019s special chicken curry", "Sri Lankan", "Our signature chicken curry, cooked to the family recipe.", 2, false, true, "Curry", 4],
+  ["Jaffna style coconut fish curry", "Sri Lankan", "Fish simmered in coconut milk with Jaffna spices and curry leaves.", 2, false, true, "Curry", 5],
+  ["Pork curry", "Sri Lankan", "Sri Lankan style pork curry, dark-roasted and slow-cooked.", 2, false, false, "Curry", 4],
+  ["Jaffna spicy beef curry", "Sri Lankan", "Beef cooked down in a hot, roasted Jaffna masala.", 3, false, true, "Curry", 5],
+  ["Prawns curry", "Sri Lankan", "Prawns in a spiced coconut gravy.", 2, false, true, "Curry", 4],
+  ["White rice", "Sri Lankan", "Steamed white rice.", 0, true, true, "Rice", null],
+  ["Poonakari brown rice", "Sri Lankan", "Nutty red rice from Poonakari in the north, the classic partner for Jaffna curries.", 0, true, true, "Rice", null],
+  ["Sweet fried chicken kotthu", "Sri Lankan", "Chopped roti on the hot plate with sweet, crispy fried chicken.", 1, false, true, "Kotthu", 15],
+  ["Chicken curry kotthu", "Sri Lankan", "Kotthu roti tossed with chicken curry, egg and vegetables.", 2, false, true, "Kotthu", 14],
+  ["Mutton kotthu", "Sri Lankan", "Kotthu roti with spiced mutton, egg and leeks.", 2, false, true, "Kotthu", 15],
+  ["Seafood kotthu", "Sri Lankan", "Kotthu roti with prawns, fish and cuttlefish.", 2, false, true, "Kotthu", 15],
+  ["Idiyappam kotthu", "Sri Lankan", "String hoppers chopped and wok-tossed with egg, vegetables and house spices.", 1, false, true, "Kotthu", 15],
+  ["Puttu kotthu", "Sri Lankan", "Crumbled puttu wok-tossed with egg, vegetables and house spices.", 1, false, true, "Kotthu", 15],
+  ["Sri Lankan style potato curry", "Sri Lankan", "Potatoes in a mild, turmeric-gold coconut curry.", 1, true, true, "Side", 2],
+  ["Sri Lankan style dhal curry", "Sri Lankan", "Red lentils simmered with coconut milk, curry leaves and mustard seeds.", 1, true, true, "Side", 2],
+  ["Appalam", "Sri Lankan", "Crisp lentil wafers to crunch alongside rice and curry.", 0, true, true, "Side", null],
+  ["Chicken biryani", "Indian", "Fragrant basmati layered with spiced chicken, mint and fried onions.", 2, false, true, "Biryani", 15],
+  ["Mutton biryani", "Indian", "Tender mutton layered with fragrant rice and whole spices.", 2, false, true, "Biryani", 16],
+  ["Hyderabadi chicken biryani", "Indian", "Dum-cooked the Hyderabadi way, with saffron and slow-cooked chicken.", 2, false, true, "Biryani", 15],
+  ["Idly", "Indian", "Soft steamed rice cakes with sambar and chutney.", 1, true, true, "Tiffin", null],
+  ["Dosa", "Indian", "Crisp rice crepe with sambar and chutneys.", 1, true, true, "Tiffin", null],
+  ["Appam", "Indian", "Lacy rice pancakes with soft, spongy centres.", 0, true, true, "Tiffin", null],
+  ["Idiyappam", "Indian", "Steamed string hoppers, light and delicate.", 0, true, true, "Tiffin", null],
+  ["Mandi biryani", "Arab", "Slow-cooked meat over smoky, spiced mandi rice with toasted nuts.", 1, false, true, "Biryani", 16],
+  ["Naan", "Arab", "Soft, blistered flatbread.", 0, true, true, "Bread", 2],
+  ["Garlic naan", "Arab", "Naan brushed with garlic butter and herbs.", 0, true, true, "Bread", 2],
+  ["Sheermal bread", "Arab", "Lightly sweet, saffron-scented flatbread.", 0, true, true, "Bread", 3],
+  ["Beef steak", "Arab", "Seasoned beef steak, seared on the grill.", 1, false, true, "Grill", 35],
+  ["Chicken tikka", "Arab", "Yogurt-marinated chicken, charred on the grill.", 2, false, true, "Grill", 6],
+  ["Kebab", "Arab", "Spiced minced meat kebabs off the grill.", 1, false, true, "Grill", 6],
+  ["Vegetable fried rice", "Fusion", "Wok-tossed rice with crisp mixed vegetables.", 1, true, true, "Fried rice", 10],
+  ["Egg fried rice", "Fusion", "Fried rice with scrambled egg and spring onion.", 1, false, true, "Fried rice", 12],
+  ["Chicken fried rice", "Fusion", "Fried rice with chicken, egg and leeks.", 1, false, true, "Fried rice", 15],
+  ["Seafood fried rice", "Fusion", "Fried rice with prawns, fish and cuttlefish.", 1, false, true, "Fried rice", 15],
+  ["Chicken pasta", "Fusion", "Pasta tossed with chicken, vegetables and a creamy house sauce.", 1, false, true, "Pasta", 16],
+  ["Seafood pasta", "Fusion", "Pasta tossed with prawns, fish and cuttlefish in a creamy house sauce.", 1, false, true, "Pasta", 16],
+  ["Chilli chicken", "Fusion", "Crisp chicken tossed with green chilli, capsicum and onion.", 3, false, true, "Devilled", 5],
+  ["Juicy beef devilled", "Fusion", "Tender beef wok-tossed in a sweet-hot devilled sauce.", 2, false, true, "Devilled", 6],
+  ["Sri Lankan style chicken devilled", "Fusion", "Chicken wok-tossed with onion, capsicum and a sweet chilli glaze.", 2, false, true, "Devilled", 5],
+  ["Prawns devilled", "Fusion", "Juicy prawns in a sweet-hot devilled sauce.", 2, false, true, "Devilled", 5],
+  ["Butter chicken", "Fusion", "Tandoori chicken in a silky tomato and butter gravy.", 1, false, true, "Curry", 4],
+  ["Poomani house-made ice cream", "Desserts", "Poomani Authentic Kitchen\u2019s own ice cream, in multiple flavours.", 0, true, true, "Dessert", 3],
+  ["Paayasam", "Desserts", "A softly sweet, cardamom-scented milk pudding.", 0, true, true, "Dessert", 2],
+  ["Sri Lankan & Indian sweets", "Desserts", "An assortment of traditional sweets from both kitchens.", 0, true, true, "Dessert", 3]
+].map(([name,cuisine,desc,spice,veg,halal,course,price],id) => ({id,name,cuisine,desc,spice,veg,halal,course,price}));
 const byName = n => DISHES.find(d => d.name === n);
 const PRESETS = {
   mix:['Jaffna style crab curry','Poonakari brown rice','Chicken biryani','Dosa','Mandi biryani','Chicken tikka','Paayasam'],
@@ -2686,10 +2714,11 @@ const PRESETS = {
 const listEl = document.getElementById('dishList');
 const picked = new Set();
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const money = price => Number.isFinite(price) ? `$${price}` : 'Ask for price';
 listEl.innerHTML = DISHES.map(d => `
   <li class="dcard" data-id="${d.id}" style="--k:${KITCHENS[d.cuisine]}">
     <div class="dc-top"><span class="dc-k">${d.cuisine}</span><span class="dc-course">${d.course}</span></div>
-    <h4>${esc(d.name)}</h4>
+    <div class="dc-title"><h4>${esc(d.name)}</h4><span class="dc-price${Number.isFinite(d.price) ? '' : ' quote'}">${money(d.price)}</span></div>
     <p>${esc(d.desc)}</p>
     <div class="dc-foot">
       <span class="dc-heat" aria-label="Heat ${d.spice} of 3">${d.spice ? '<i class="on"></i>'.repeat(d.spice) + '<i></i>'.repeat(3-d.spice) : '<em>Mild</em>'}</span>
@@ -2754,9 +2783,9 @@ function orderText(){
   const lines = ['Hello Poomani Authentic Kitchen, I would like to order catering.', '',
     `Event: ${mb.event.value}`, `Guests: ${mb.guests.value}`, `Date: ${mb.date.value || 'To confirm'}`, `Address: ${(typeof mbAddress === 'function' && mbAddress()) || 'To confirm'}`, '',
     ks.length > 1 ? `Menu (mixed cuisine: ${ks.join(' + ')}):` : `Menu${ks.length ? ' (' + ks[0] + ')' : ''}:`];
-  ks.forEach(k => { lines.push(`${k}:`); ds.filter(d => d.cuisine === k).sort((a,b) => COURSE_ORDER.indexOf(a.course) - COURSE_ORDER.indexOf(b.course)).forEach(d => lines.push(`- ${d.name} (${d.course.toLowerCase()})`)); });
+  ks.forEach(k => { lines.push(`${k}:`); ds.filter(d => d.cuisine === k).sort((a,b) => COURSE_ORDER.indexOf(a.course) - COURSE_ORDER.indexOf(b.course)).forEach(d => lines.push(`- ${d.name} (${d.course.toLowerCase()}) — ${money(d.price)}`)); });
   if (!ds.length) lines.push('I would like help choosing dishes.');
-  lines.push('', 'Please confirm availability and pricing. Thank you.');
+  lines.push('', 'Please confirm availability, quantities and final pricing. Thank you.');
   return lines.join('\n');
 }
 let ordered = false, orderSig = '';
@@ -2783,7 +2812,7 @@ function renderPanel(){
     mb.picked.innerHTML = ks.map(k => `
       <div class="mb-group" style="--k:${KITCHENS[k]}"><h4>${k}</h4><ul>${
         ds.filter(d => d.cuisine === k).sort((a,b) => COURSE_ORDER.indexOf(a.course) - COURSE_ORDER.indexOf(b.course))
-          .map(d => `<li><span>${esc(d.name)}<small>${d.course}</small></span><button type="button" class="mb-x" data-id="${d.id}" aria-label="Remove ${esc(d.name)}">×</button></li>`).join('')
+          .map(d => `<li><span>${esc(d.name)}<small>${d.course} · ${money(d.price)}</small></span><button type="button" class="mb-x" data-id="${d.id}" aria-label="Remove ${esc(d.name)}">×</button></li>`).join('')
       }</ul></div>`).join('');
   }
   mb.bal.innerHTML = ks.map(k => `<i style="flex:${ds.filter(d => d.cuisine === k).length};background:${KITCHENS[k]}"></i>`).join('');
@@ -2810,6 +2839,7 @@ function applyPreset(key, scroll){
   renderPanel();
   if (scroll) document.getElementById('menu').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
 }
+document.querySelectorAll('[data-menu-combo]').forEach(b => b.addEventListener('click', () => applyPreset(b.dataset.menuCombo, true)));
 document.getElementById('mbQuote').addEventListener('click', () => {
   const ev = document.querySelector(`#eventChips input[value="${mb.event.value}"]`); if (ev) ev.checked = true;
   const g = Math.min(1500, Math.max(20, +mb.guests.value || 150)); const qg = document.getElementById('qGuests'); qg.value = g; qg.dispatchEvent(new Event('input'));
